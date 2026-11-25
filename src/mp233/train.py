@@ -5,6 +5,7 @@ from pathlib import Path
 import mlflow
 import mlflow.sklearn
 import pandas as pd
+import yaml
 
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
@@ -21,12 +22,15 @@ from sklearn.preprocessing import OneHotEncoder
 
 ROOT = Path(__file__).resolve().parents[2]
 
-RAW_DATA_PATH = ROOT / "data" / "raw" / "train.csv"
-CLEAN_DATA_PATH = ROOT / "data" / "processed" / "train_clean.csv"
+with open(ROOT / "params.yaml", encoding="utf-8") as file:
+    PARAMS = yaml.safe_load(file)
 
-TRACKING_URI = "sqlite:///mlflow.db"
-EXPERIMENT_NAME = "MP233_Used_Two_Wheeler"
-MODEL_NAME = "mp233_used_two_wheeler"
+RAW_DATA_PATH = ROOT / PARAMS["data"]["raw_path"]
+CLEAN_DATA_PATH = ROOT / PARAMS["data"]["clean_path"]
+
+TRACKING_URI = PARAMS["mlflow"]["tracking_uri"]
+EXPERIMENT_NAME = PARAMS["mlflow"]["experiment_name"]
+MODEL_NAME = PARAMS["mlflow"]["registered_model_name"]
 
 
 # --------------------------------------------------
@@ -70,7 +74,7 @@ def main():
         "city_zone",
     ]
 
-    target = "resale_thousand_rs"
+    target = PARAMS["data"]["target"]
 
     X = df[features]
     y = df[target]
@@ -80,11 +84,12 @@ def main():
     # --------------------------------------------------
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=0.20,
-        random_state=42
-    )
+    X,
+    y,
+    test_size=PARAMS["training"]["test_size"],
+    random_state=PARAMS["training"]["random_state"]
+)
+    
 
     # --------------------------------------------------
     # 5. Preprocessing
@@ -134,11 +139,11 @@ def main():
             (
                 "regressor",
                 RandomForestRegressor(
-                    n_estimators=200,
-                    max_depth=12,
-                    random_state=42,
-                    n_jobs=-1
-                )
+    n_estimators=PARAMS["model"]["n_estimators"],
+    max_depth=PARAMS["model"]["max_depth"],
+    random_state=PARAMS["training"]["random_state"],
+    n_jobs=PARAMS["model"]["n_jobs"]
+)
             ),
         ]
     )
@@ -166,13 +171,13 @@ def main():
 
         # Log parameters
         mlflow.log_params({
-            "model_type": "RandomForestRegressor",
-            "n_estimators": 200,
-            "max_depth": 12,
-            "random_state": 42,
-            "test_size": 0.20,
-            "imputation": "median_numeric_most_frequent_categorical",
-        })
+    "model_type": "RandomForestRegressor",
+    "n_estimators": PARAMS["model"]["n_estimators"],
+    "max_depth": PARAMS["model"]["max_depth"],
+    "random_state": PARAMS["training"]["random_state"],
+    "test_size": PARAMS["training"]["test_size"],
+    "imputation": "median_numeric_most_frequent_categorical",
+})
 
         # Log metrics
         mlflow.log_metric("test_mae", mae)

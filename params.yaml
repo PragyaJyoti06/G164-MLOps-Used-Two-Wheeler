@@ -1,0 +1,29 @@
+project:
+  group_id: "G164"
+  problem_id: "MP233"
+
+data:
+  raw_path: "data/raw/train.csv"
+  clean_path: "data/processed/train_clean.csv"
+  later_path: "data/raw/later.csv"
+  holdout_path: "data/raw/holdout_features.csv"
+  target: "resale_thousand_rs"
+
+training:
+  test_size: 0.20
+  random_state: 42
+
+model:
+  n_estimators: 200
+  max_depth: 12
+  n_jobs: -1
+
+mlflow:
+  tracking_uri: "sqlite:///mlflow.db"
+  experiment_name: "MP233_Used_Two_Wheeler"
+  registered_model_name: "mp233_used_two_wheeler"
+
+monitoring:
+  psi_bins: 10
+  retrain_fraction: 0.70
+  promotion_threshold: 0.08
