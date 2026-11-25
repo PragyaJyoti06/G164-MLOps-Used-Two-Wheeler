@@ -40,12 +40,12 @@ data_issues:
     present: false
     column: null
     true_levels: null
-    
+
 tracking:
-  experiment_name: null
-  best_run_id: null        # the MLflow run id of your v1 model
-  registered_model_name: null
-  champion_version: null
+  experiment_name: "MP233_G164_Used_Two_Wheeler"
+  best_run_id: "8872d00d94f7425886ca2ffa72a3b008"
+  registered_model_name: "mp233_g164_used_two_wheeler"
+  champion_version: 1
 
 monitoring:
   psi:                     # cleaned train.csv vs later.csv, 10 bins

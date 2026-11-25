@@ -159,7 +159,9 @@ def main():
     # 8. Train and log experiment
     # --------------------------------------------------
 
-    with mlflow.start_run(run_name="baseline_v1"):
+    run_name = f"RF_{PARAMS['model']['n_estimators']}_depth_{PARAMS['model']['max_depth']}"
+
+    with mlflow.start_run(run_name=run_name):
 
         model.fit(X_train, y_train)
 
@@ -198,15 +200,14 @@ def main():
 
         # Log and register model
         mlflow.sklearn.log_model(
-            sk_model=model,
-            name="model",
-            registered_model_name=MODEL_NAME,
-            input_example=input_example,
-            skops_trusted_types=[
-                "numpy.dtype",
-                "sklearn.tree._tree.Tree",
-            ],
-        )
+    sk_model=model,
+    name="model",
+    input_example=input_example,
+    skops_trusted_types=[
+        "numpy.dtype",
+        "sklearn.tree._tree.Tree",
+    ],
+)
 
         print("\nMODEL TRAINING COMPLETED")
         print("------------------------")
@@ -216,7 +217,7 @@ def main():
         print("RMSE:", round(rmse, 4))
         print("R2:", round(r2, 4))
         print("Data SHA-256:", data_hash)
-        print("Registered model:", MODEL_NAME)
+        print("Model logged successfully")
 
 
 if __name__ == "__main__":
