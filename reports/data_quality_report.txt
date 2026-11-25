@@ -1,0 +1,149 @@
+
+=================================================================
+DATASET INFORMATION
+=================================================================
+Train rows: 1033
+Train columns: 12
+Later rows: 300
+Holdout rows: 250
+
+Train column types:
+record_id                           str
+date                                str
+age_years                       float64
+km_driven                         int64
+engine_cc                         int64
+owners                            int64
+service_records                   int64
+accidents                         int64
+brand_tier                          str
+city_zone                           str
+final_price_from_rc_transfer    float64
+resale_thousand_rs              float64
+
+=================================================================
+1. LEAKING COLUMN CHECK
+=================================================================
+Columns missing from holdout: ['final_price_from_rc_transfer', 'resale_thousand_rs']
+final_price_from_rc_transfer: correlation with target = 0.3050
+
+=================================================================
+2. UNIT MIXUP CHECK
+=================================================================
+
+Column: age_years
+           min      mean   max  median
+city_zone                             
+Central    0.5  7.739737  14.9    8.00
+North      0.5  7.984040  14.9    8.10
+South      0.5  7.634127  15.0    7.75
+
+Column: km_driven
+            min          mean    max   median
+city_zone                                    
+Central    1292  50060.884211  89768  53322.5
+North      1072  49103.241895  89888  50362.0
+South      1475  49928.928571  89589  51185.0
+
+Column: engine_cc
+           min        mean  max  median
+city_zone                              
+Central    102  306.565789  500   303.0
+North      104  300.975062  498   307.0
+South      106  307.075397  495   311.5
+
+Column: owners
+           min      mean  max  median
+city_zone                            
+Central      1  2.434211    4     2.0
+North        1  2.413965    4     2.0
+South        1  2.380952    4     2.0
+
+Column: service_records
+           min      mean  max  median
+city_zone                            
+Central     -1  9.439474   20    10.0
+North       -1  9.845387   20    10.0
+South       -1  9.500000   20     9.0
+
+Column: accidents
+           min      mean  max  median
+city_zone                            
+Central      0  1.565789    3     2.0
+North        0  1.446384    3     1.0
+South        0  1.400794    3     1.0
+
+Column: final_price_from_rc_transfer
+            min       mean    max  median
+city_zone                                
+Central    27.8  86.225000  140.8   85.60
+North      16.0  79.398504  135.1   79.00
+South      23.0  80.365079  141.2   81.05
+
+Column: resale_thousand_rs
+            min       mean     max  median
+city_zone                                 
+Central    30.5  93.525000  1162.0   85.40
+North      14.6  90.324190  1254.0   79.90
+South      23.6  87.311111  1225.0   81.15
+
+=================================================================
+3. SENTINEL VALUE CHECK
+=================================================================
+service_records: value -1 occurs 33 times
+
+=================================================================
+4. DUPLICATE ROW CHECK
+=================================================================
+Exact duplicate rows: 33
+
+=================================================================
+5. STUCK SENSOR CHECK
+=================================================================
+km_driven: value '80060' repeats for 129 consecutive rows; from 2026-03-21 00:00:00 to 2026-04-12 00:00:00
+owners: value '3' repeats for 7 consecutive rows; from 2026-06-23 00:00:00 to 2026-06-26 00:00:00
+accidents: value '1' repeats for 7 consecutive rows; from 2026-01-14 00:00:00 to 2026-01-14 00:00:00
+brand_tier: value 'budget' repeats for 11 consecutive rows; from 2026-05-07 00:00:00 to 2026-05-09 00:00:00
+city_zone: value 'Central' repeats for 6 consecutive rows; from 2026-01-10 00:00:00 to 2026-01-11 00:00:00
+
+=================================================================
+6. TARGET TYPO CHECK
+=================================================================
+Target median: 82.3
+Possible 10x target values:
+record_id  resale_thousand_rs
+   R00040              1010.0
+   R00561               945.0
+   R00615              1225.0
+   R00836              1254.0
+   R00977              1162.0
+
+=================================================================
+7. SPELLING VARIANT CHECK
+=================================================================
+
+Column: brand_tier
+Train value counts:
+brand_tier
+budget     531
+mid        304
+premium    198
+Later value counts:
+brand_tier
+budget     142
+mid         90
+premium     68
+True levels in later.csv: 3
+
+Column: city_zone
+Train value counts:
+city_zone
+North      401
+Central    380
+South      252
+Later value counts:
+city_zone
+North      125
+Central    101
+South       74
+True levels in later.csv: 3

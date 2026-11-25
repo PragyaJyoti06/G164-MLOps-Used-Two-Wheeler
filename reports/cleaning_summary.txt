@@ -1,0 +1,25 @@
+DATA CLEANING SUMMARY
+==================================================
+Original rows: 1033
+1. Exact duplicate rows removed: 33
+2. service_records (-1) converted to missing: 32
+3. Suspicious km_driven values converted to missing: 124
+4. Suspected target typo values divided by 10: 11
+5. Potential leakage column removed: final_price_from_rc_transfer
+
+Remaining missing values:
+record_id               0
+date                    0
+age_years               0
+km_driven             124
+engine_cc               0
+owners                  0
+service_records        32
+accidents               0
+brand_tier              0
+city_zone               0
+resale_thousand_rs      0
+
+==================================================
+Final rows: 1000
+Final columns: 11
