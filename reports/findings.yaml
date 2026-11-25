@@ -6,37 +6,41 @@ group_id: "G164"          # your group id, e.g. "G042"
 problem_id: "MP233"
 
 data_issues:
-  # For each of the 7 kinds: present: true or false.
-  # If present is false, leave the other values as null.
   leaking_column:
-    present: null
-    column: null           # the column that must not be used as a feature
-  unit_mixup:
-    present: null
-    column: null           # the column recorded in a different unit
-    group_value: null      # the value of city_zone whose rows are affected
-    factor: null           # wrong value = right value x factor
-  sentinel_value:
-    present: null
-    column: null
-    value: null            # the special number typed instead of a blank
-    count: null            # how many rows have it
-  duplicate_rows:
-    present: null
-    count: null            # number of EXTRA copies (rows you would delete)
-  stuck_sensor:
-    present: null
-    column: null
-    start_date: null       # first date with the stuck value, YYYY-MM-DD
-    end_date: null         # last date with the stuck value, YYYY-MM-DD
-  target_typos:
-    present: null
-    count: null            # rows whose target was typed 10 times too big
-  spelling_variants:
-    present: null
-    column: null
-    true_levels: null      # how many real categories there are after cleaning
+    present: true
+    column: final_price_from_rc_transfer
 
+  unit_mixup:
+    present: false
+    column: null
+    group_value: null
+    factor: null
+
+  sentinel_value:
+    present: true
+    column: service_records
+    value: -1
+    count: 33
+
+  duplicate_rows:
+    present: true
+    count: 33
+
+  stuck_sensor:
+    present: true
+    column: km_driven
+    start_date: "2026-03-21"
+    end_date: "2026-04-12"
+
+  target_typos:
+    present: true
+    count: 11
+
+  spelling_variants:
+    present: false
+    column: null
+    true_levels: null
+    
 tracking:
   experiment_name: null
   best_run_id: null        # the MLflow run id of your v1 model

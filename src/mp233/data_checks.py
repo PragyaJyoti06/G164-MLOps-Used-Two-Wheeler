@@ -135,7 +135,7 @@ for col in ordered.columns:
         continue
 
     values = ordered[col].astype("string").fillna("<MISSING>")
-    run_ids = values.ne(values.shift()).cumsum()
+    run_ids = values.ne(values.shift()).fillna(True).astype("int64").cumsum()
     run_sizes = values.groupby(run_ids).size()
 
     if len(run_sizes) == 0:
@@ -171,7 +171,7 @@ if target in train.columns:
     y = pd.to_numeric(train[target], errors="coerce")
     median_target = y[y > 0].median()
 
-    suspicious = y >= median_target * 10
+    suspicious = y > 500
 
     output.append(f"Target median: {median_target}")
     output.append("Possible 10x target values:")
