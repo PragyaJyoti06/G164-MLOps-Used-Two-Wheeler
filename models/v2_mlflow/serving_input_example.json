@@ -1,0 +1,66 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "age_years",
+      "km_driven",
+      "engine_cc",
+      "owners",
+      "service_records",
+      "accidents",
+      "brand_tier",
+      "city_zone"
+    ],
+    "data": [
+      [
+        22.2,
+        13244.0,
+        147.0,
+        2.0,
+        14.0,
+        1.0,
+        "mid",
+        "Central"
+      ],
+      [
+        21.6,
+        39913.0,
+        197.0,
+        2.0,
+        2.0,
+        0.0,
+        "premium",
+        "South"
+      ],
+      [
+        9.4,
+        61256.0,
+        154.0,
+        4.0,
+        6.0,
+        1.0,
+        "mid",
+        "Central"
+      ],
+      [
+        9.9,
+        45736.0,
+        206.0,
+        2.0,
+        8.0,
+        1.0,
+        "budget",
+        "South"
+      ],
+      [
+        21.5,
+        89680.0,
+        466.0,
+        2.0,
+        15.0,
+        2.0,
+        "mid",
+        "North"
+      ]
+    ]
+  }
+}
