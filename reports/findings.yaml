@@ -1,8 +1,4 @@
-# MP233 findings --- fill in every value, keep every key.
-# The marking tool reads this file. Write null only where the comment says so.
-# Use the exact column names and group values from your data files.
-
-group_id: "G164"          # your group id, e.g. "G042"
+﻿group_id: "G164"
 problem_id: "MP233"
 
 data_issues:
@@ -45,23 +41,25 @@ tracking:
   experiment_name: "MP233_G164_Used_Two_Wheeler"
   best_run_id: "8872d00d94f7425886ca2ffa72a3b008"
   registered_model_name: "mp233_g164_used_two_wheeler"
-  champion_version: 1
+  champion_version: 2
 
 monitoring:
-  psi:                     # cleaned train.csv vs later.csv, 10 bins
-    age_years: null
-    km_driven: null
-    engine_cc: null
-    owners: null
-    service_records: null
-    accidents: null
-  most_drifted_feature: null
-  mae_by_group:            # v1 on later.csv, per value of city_zone
-    'North': null
-    'South': null
-    'Central': null
-  worst_served_group: null
-  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
-  mae_v2_on_check: null    # v2 on the same rows
-  decision: null           # promote or keep
+  psi:
+    age_years: 5.783528
+    km_driven: 1.505996
+    engine_cc: 0.092787
+    owners: 0.004121
+    service_records: 0.389983
+    accidents: 0.003140
 
+  most_drifted_feature: age_years
+
+  mae_by_group:
+    'North': 15.225275
+    'South': 16.023676
+    'Central': 23.881079
+
+  worst_served_group: Central
+  mae_v1_on_check: 18.766689
+  mae_v2_on_check: 11.586422
+  decision: promote

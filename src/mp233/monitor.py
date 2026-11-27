@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import skops.io as sio
+import yaml
 from sklearn.metrics import mean_absolute_error
 
 
@@ -67,6 +68,13 @@ def calculate_psi(reference, current, bins=10):
 
 
 def main():
+    with open("params.yaml", "r", encoding="utf-8") as file:
+        params = yaml.safe_load(file)
+
+    required_improvement = float(
+        params["monitoring"]["promotion_threshold"]
+    )
+
     train = pd.read_csv("data/processed/train_clean.csv")
     later = pd.read_csv("data/raw/later.csv")
 
@@ -139,7 +147,6 @@ def main():
     v2_mae = mean_absolute_error(y_check, v2_check_predictions)
 
     improvement = (v1_mae - v2_mae) / v1_mae
-    required_improvement = 0.08
 
     print("Training portion rows:", split_index)
     print("Check portion rows:", len(check_data))
