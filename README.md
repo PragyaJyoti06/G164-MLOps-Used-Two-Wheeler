@@ -70,9 +70,9 @@ The cleaning pipeline performs the following operations:
 | Issue | Finding |
 |---|---|
 | Potential leakage column | `final_price_from_rc_transfer` |
-| Sentinel values | 33 |
+| Sentinel values | 33 detected; 32 converted to missing after duplicate removal |
 | Exact duplicate rows | 33 |
-| Repeated `km_driven` sequence | 129 consecutive rows |
+| Repeated `km_driven` sequence | 129 consecutive rows identified; 124 suspicious values converted to missing |
 | Suspicious target values | 11 |
 | Unit mix-up | Not detected |
 | Spelling variants | Not detected |
@@ -232,8 +232,6 @@ G164-MLOps-Used-Two-Wheeler/
 |   |-- workflows/
 |-- Dockerfile
 |-- .dockerignore
-|-- dvc.yaml
-|-- dvc.lock
 |-- .dvc/
 |-- mlflow.db
 |-- params.yaml
